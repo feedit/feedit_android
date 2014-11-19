@@ -67,7 +67,7 @@ public class MainActivity extends Activity {
 
 	class Task extends AsyncTask<Integer, Integer, String> {
 		private WebView webview;
-		private String API = "http://xudafeng.com/feedit/index.php";
+		private String API = "http://xudafeng.com/feedit";
 		private String TAG = "feedit";
 
 		public Task(WebView webView) {
