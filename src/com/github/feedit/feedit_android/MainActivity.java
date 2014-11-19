@@ -67,7 +67,7 @@ public class MainActivity extends Activity {
 
 	class Task extends AsyncTask<Integer, Integer, String> {
 		private WebView webview;
-		private String API = "http://192.168.56.1/test/index.php";
+		private String API = "http://xudafeng.com/feedit/index.php";
 		private String TAG = "feedit";
 
 		public Task(WebView webView) {
@@ -83,17 +83,23 @@ public class MainActivity extends Activity {
 			HttpGet myget = new HttpGet(API);
 			try {
 				HttpResponse response = client.execute(myget);
-				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(response.getEntity().getContent()));
+				int statusCode = response.getStatusLine().getStatusCode();
+				Log.i(TAG, "status code: " + statusCode);
+				if (statusCode == 200) {
+					BufferedReader reader = new BufferedReader(
+							new InputStreamReader(response.getEntity().getContent()));
 
-				for (String s = reader.readLine(); s != null; s = reader
-						.readLine()) {
-					builder.append(s);
+					for (String s = reader.readLine(); s != null; s = reader
+							.readLine()) {
+						builder.append(s);
+					}
+					JSONObject jsonObject = new JSONObject(builder.toString());
+					Log.i(TAG, jsonObject.toString());
+					webview.addJavascriptInterface(jsonObject, "dataFromInterface");
+					webview.loadUrl("file:///android_asset/index.html");
+				} else {
+					Log.i(TAG, "failed");
 				}
-				JSONObject jsonObject = new JSONObject(builder.toString());
-				Log.i(TAG, jsonObject.toString());
-				webview.addJavascriptInterface(jsonObject, "dataFromInterface");
-				webview.loadUrl("file:///android_asset/index.html");
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
