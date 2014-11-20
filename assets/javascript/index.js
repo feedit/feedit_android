@@ -5,14 +5,14 @@
  * mock data
  */
 
-var line = 20;
+var line = 10;
 var data = [];
 while (line --) {
   data.push({
-    id: 1,
-    title: '这里的一行文字是文章标题',
+    id: line,
+    title: '这里的一行文字是文章标题长长长长长长长长长长长长',
     url: 'http://www.xdf.me',
-    read: false
+    date: '2013.12.12'
   });
 }
 
@@ -26,9 +26,26 @@ if (typeof dataFromInterface !== 'undefined') {
   var content = $('#content')[0];
   var tplElm = $('#template')[0].innerHTML;
   var tpl = grace.compile(tplElm);
+  var API = 'http://xudafeng.com/feedit/read.php';
   var node = tpl({
     list: data
   });
   content.innerHTML = node;
+  document.addEventListener('click', function(e) {
+    var target = e.target;
+    if (target.nodeName === 'BUTTON') {
+      var id = target.id.split('button-')[1];
+      id = parseInt(id);
+      var url = target.getAttribute('data-url');
+      //ajax
+      JSONP(API, {
+        id: id
+      }, 'callback', function(data) {
+          if (data.success) {
+            target.style.display = 'none';
+            location.href = url;
+          }
+      });
+    }
+  }, false);
 })(this);
-

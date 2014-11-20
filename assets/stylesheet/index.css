@@ -25,7 +25,13 @@ ul {
 li {
   list-style-type: none;
   margin: 12px 0;
-  font-size: 20px;
+  font-size: 18px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+li p {
+  text-align: center;
 }
 i {
   font-style: normal;

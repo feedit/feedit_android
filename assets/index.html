@@ -12,6 +12,7 @@
   <link rel="shortcut icon" href="images/avatar.png" type="image/x-icon" />
   <link rel="stylesheet" href="stylesheet/base.css"/>
   <link rel="stylesheet" href="stylesheet/index.css"/>
+  <script src="javascript/jsonp.js"></script>
   <script src="javascript/grace.js"></script>
 </head>
 <body>
@@ -19,7 +20,12 @@
   <script type="template" id="template">
     <ul>
       <#each val in $list#>
-      <li><i><#=$val.id#>.</i><a href="<#=$val.url#>" target="_blank"><#=$val.title#></a></li>
+      <li>
+        <i><#=$val.id#>.</i>
+        <button id="button-<#=$val.id#>" data-url="<#=$val.url#>"
+target="_blank">Read</button>
+        <span><#=$val.title#></span>
+      </li>
       <#/each#>
     </ul>
   </script>
