@@ -41,10 +41,12 @@ if (typeof dataFromInterface !== 'undefined') {
       JSONP(API, {
         id: id
       }, 'callback', function(data) {
+        if (data) {
           if (data.success) {
             target.style.display = 'none';
             location.href = url;
           }
+        }
       });
     }
   }, false);

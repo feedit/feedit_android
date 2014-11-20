@@ -21,9 +21,8 @@
     <ul>
       <#each val in $list#>
       <li>
-        <i><#=$val.id#>.</i>
         <button id="button-<#=$val.id#>" data-url="<#=$val.url#>"
-target="_blank">Read</button>
+target="_blank"><#=$val.id#></button>
         <span><#=$val.title#></span>
       </li>
       <#/each#>
