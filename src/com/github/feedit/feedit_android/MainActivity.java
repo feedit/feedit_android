@@ -87,7 +87,8 @@ public class MainActivity extends Activity {
 				Log.i(TAG, "status code: " + statusCode);
 				if (statusCode == 200) {
 					BufferedReader reader = new BufferedReader(
-							new InputStreamReader(response.getEntity().getContent()));
+							new InputStreamReader(response.getEntity()
+									.getContent()));
 
 					for (String s = reader.readLine(); s != null; s = reader
 							.readLine()) {
@@ -95,7 +96,8 @@ public class MainActivity extends Activity {
 					}
 					JSONObject jsonObject = new JSONObject(builder.toString());
 					Log.i(TAG, jsonObject.toString());
-					webview.addJavascriptInterface(jsonObject, "dataFromInterface");
+					webview.addJavascriptInterface(jsonObject,
+							"dataFromInterface");
 					webview.loadUrl("file:///android_asset/index.html");
 				} else {
 					Log.i(TAG, "failed");
