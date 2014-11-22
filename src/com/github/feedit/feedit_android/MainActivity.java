@@ -30,8 +30,6 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		// init loading
-		ProgressBar processbar = (ProgressBar) findViewById(R.id.loading);
 		// init webview
 		WebView webView = (WebView) findViewById(R.id.webview);
 		webView.getSettings().setJavaScriptEnabled(true);
@@ -47,7 +45,7 @@ public class MainActivity extends Activity {
 		});
 
 		// start sync task
-		Task task = new Task(webView, processbar);
+		Task task = new Task(webView);
 		task.execute(100);
 	}
 
@@ -71,14 +69,13 @@ public class MainActivity extends Activity {
 	}
 
 	class Task extends AsyncTask<Integer, Integer, String> {
-		private ProgressBar processbar;
+		ProgressBar processbar = (ProgressBar) findViewById(R.id.loading);
 		private WebView webview;
 		private String API = "http://xudafeng.com/feedit";
 		private String TAG = "feedit";
 
-		public Task(WebView webView, ProgressBar processbar) {
+		public Task(WebView webView) {
 			webview = webView;
-			processbar = processbar;
 			// TODO Auto-generated constructor stub
 		}
 
@@ -93,7 +90,6 @@ public class MainActivity extends Activity {
 				int statusCode = response.getStatusLine().getStatusCode();
 				Log.i(TAG, "status code: " + statusCode);
 				if (statusCode == 200) {
-					processbar.setVisibility(View.INVISIBLE);
 					BufferedReader reader = new BufferedReader(
 							new InputStreamReader(response.getEntity()
 									.getContent()));
@@ -107,6 +103,7 @@ public class MainActivity extends Activity {
 					webview.addJavascriptInterface(jsonObject,
 							"dataFromInterface");
 					webview.loadUrl("file:///android_asset/index.html");
+					
 				} else {
 					Log.i(TAG, "failed");
 				}
@@ -121,6 +118,11 @@ public class MainActivity extends Activity {
 				e.printStackTrace();
 			}
 			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			processbar.setVisibility(View.GONE);
 		}
 	}
 }
