@@ -53,9 +53,7 @@ var exec = function(data, global) {
 
 if (ios) {
   this.Ready = function(data) {
-    if (data.success) {
-      exec(data.data, window);
-    }
+    exec(data, window);
   };
 } else if(android) {
   data = dataFromInterface.get('data');
