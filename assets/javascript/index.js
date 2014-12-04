@@ -4,9 +4,9 @@
 /**
  * mock data
  */
-
 var line = 10;
 var data = [];
+
 while (line --) {
   data.push({
     id: line,
@@ -16,12 +16,11 @@ while (line --) {
   });
 }
 
-if (typeof dataFromInterface !== 'undefined') {
-  data = dataFromInterface.get('data');
-  data = JSON.parse(data);
-}
+var userAgent = navigator.userAgent;
+var ios = !!userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/i);
+var android = userAgent.indexOf("Android") > -1 || userAgent.indexOf("Linux") > -1;
 
-;(function(global, undefined) {
+var exec = function(data, global) {
   var $ = document.querySelectorAll.bind(document);
   var content = $('#content')[0];
   var tplElm = $('#template')[0].innerHTML;
@@ -50,4 +49,18 @@ if (typeof dataFromInterface !== 'undefined') {
       });
     }
   }, false);
-})(this);
+}
+
+if (ios) {
+  this.Ready = function(data) {
+    if (data.success) {
+      exec(data.data, window);
+    }
+  };
+} else if(android) {
+  data = dataFromInterface.get('data');
+  data = JSON.parse(data);
+  exec(data, this);
+} else {
+  exec(data, this);
+}
