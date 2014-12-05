@@ -36,6 +36,7 @@ var exec = function(data, global) {
       var id = target.id.split('button-')[1];
       id = parseInt(id);
       var url = target.getAttribute('data-url');
+      var title = target.getAttribute('data-title');
       //ajax
       JSONP(API, {
         id: id
@@ -43,6 +44,8 @@ var exec = function(data, global) {
         if (data) {
           if (data.success) {
             target.style.display = 'none';
+            global.targetTitle = title;
+            global.targetUrl = url;
             location.href = url;
           }
         }
@@ -62,3 +65,4 @@ if (ios) {
 } else {
   exec(data, this);
 }
+
