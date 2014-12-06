@@ -4,7 +4,7 @@
 /**
  * mock data
  */
-var line = 10;
+var line = 0;
 var data = [];
 
 while (line --) {
@@ -29,7 +29,11 @@ var exec = function(data, global) {
   var node = tpl({
     list: data
   });
-  content.innerHTML = node;
+  if (data.length) {
+    content.innerHTML = node;
+  } else {
+    content.innerHTML = '<p class="no-result">No articles.</p>';
+  }
   document.addEventListener('click', function(e) {
     var target = e.target;
     if (target.nodeName === 'BUTTON') {
@@ -65,4 +69,3 @@ if (ios) {
 } else {
   exec(data, this);
 }
-

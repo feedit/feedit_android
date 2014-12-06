@@ -39,3 +39,7 @@ i {
 #content {
   padding: 10px;
 }
+.no-result {
+  text-align: center;
+  padding: 20px 0;
+}
