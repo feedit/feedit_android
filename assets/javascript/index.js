@@ -23,6 +23,7 @@ var android = userAgent.indexOf("Android") > -1 || userAgent.indexOf("Linux") > 
 var exec = function(data, global) {
   var $ = document.querySelectorAll.bind(document);
   var content = $('#content')[0];
+  var html = !!content.innerHTML.length;
   var tplElm = $('#template')[0].innerHTML;
   var tpl = grace.compile(tplElm);
   var API = 'http://xudafeng.com/feedit/read.php';
@@ -34,6 +35,7 @@ var exec = function(data, global) {
   } else {
     content.innerHTML = '<p class="no-result">No articles.</p>';
   }
+  if (html) return;
   document.addEventListener('click', function(e) {
     var target = e.target;
     if (target.nodeName === 'BUTTON') {
@@ -69,3 +71,4 @@ if (ios) {
 } else {
   exec(data, this);
 }
+
