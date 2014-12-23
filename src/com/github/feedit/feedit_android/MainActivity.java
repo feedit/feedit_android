@@ -12,6 +12,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,34 +20,45 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.View.OnClickListener;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ProgressBar;
 
-public class MainActivity extends Activity {
-
+@SuppressLint("SetJavaScriptEnabled")
+public class MainActivity extends Activity implements OnClickListener {
+	private WebView webView;
+	private static final String API = "http://xudafeng.com/feedit";
+	private static final String TAG = "feedit";
+	private Button rightButton;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		initView();
+		// start sync task
+		Task task = new Task();
+		task.execute(100);
+	}
+
+	public void initView() {
+		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.activity_main);
+		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title);
+		rightButton = (Button) findViewById(R.id.button_refresh);
+		rightButton.setOnClickListener(this);
 		// init webview
-		WebView webView = (WebView) findViewById(R.id.webview);
+		webView = (WebView) findViewById(R.id.webview);
 		webView.getSettings().setJavaScriptEnabled(true);
 		webView.setWebChromeClient(new WebChromeClient() {
-
 			@Override
 			public boolean onJsAlert(WebView view, String url, String message,
 					JsResult result) {
-				// TODO Auto-generated method stub
 				return super.onJsAlert(view, url, message, result);
 			}
-
 		});
-
-		// start sync task
-		Task task = new Task(webView);
-		task.execute(100);
 	}
 
 	@Override
@@ -70,13 +82,7 @@ public class MainActivity extends Activity {
 
 	class Task extends AsyncTask<Integer, Integer, String> {
 		ProgressBar processbar = (ProgressBar) findViewById(R.id.loading);
-		private WebView webview;
-		private String API = "http://xudafeng.com/feedit";
-		private String TAG = "feedit";
-
-		public Task(WebView webView) {
-			webview = webView;
-			// TODO Auto-generated constructor stub
+		public Task() {
 		}
 
 		@Override
@@ -100,10 +106,10 @@ public class MainActivity extends Activity {
 					}
 					JSONObject jsonObject = new JSONObject(builder.toString());
 					Log.i(TAG, jsonObject.toString());
-					webview.addJavascriptInterface(jsonObject,
+					webView.addJavascriptInterface(jsonObject,
 							"dataFromInterface");
-					webview.loadUrl("file:///android_asset/index.html");
-					
+					webView.loadUrl("file:///android_asset/index.html");
+
 				} else {
 					Log.i(TAG, "failed");
 				}
@@ -119,10 +125,19 @@ public class MainActivity extends Activity {
 			}
 			return null;
 		}
-		
+
 		@Override
 		protected void onPostExecute(String result) {
 			processbar.setVisibility(View.GONE);
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.button_refresh:
+			webView.reload();
+			break;
 		}
 	}
 }
