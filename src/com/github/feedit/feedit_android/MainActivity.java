@@ -38,9 +38,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		initView();
-		// start sync task
-		Task task = new Task();
-		task.execute(100);
+		getRemoteDate();
 	}
 
 	public void initView() {
@@ -80,6 +78,11 @@ public class MainActivity extends Activity implements OnClickListener {
 		return super.onOptionsItemSelected(item);
 	}
 
+	public void getRemoteDate() {
+		// start sync task
+		Task task = new Task();
+		task.execute(100);
+	}
 	class Task extends AsyncTask<Integer, Integer, String> {
 		ProgressBar processbar = (ProgressBar) findViewById(R.id.loading);
 		public Task() {
@@ -87,7 +90,6 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		@Override
 		protected String doInBackground(Integer... params) {
-			// TODO Auto-generated method stub
 			HttpClient client = new DefaultHttpClient();
 			StringBuilder builder = new StringBuilder();
 			HttpGet myget = new HttpGet(API);
@@ -109,7 +111,6 @@ public class MainActivity extends Activity implements OnClickListener {
 					webView.addJavascriptInterface(jsonObject,
 							"dataFromInterface");
 					webView.loadUrl("file:///android_asset/index.html");
-
 				} else {
 					Log.i(TAG, "failed");
 				}
@@ -136,7 +137,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.button_refresh:
-			webView.reload();
+			getRemoteDate();
 			break;
 		}
 	}
