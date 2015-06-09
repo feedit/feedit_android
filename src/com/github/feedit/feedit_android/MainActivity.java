@@ -31,7 +31,7 @@ import android.widget.ProgressBar;
 @SuppressLint("SetJavaScriptEnabled")
 public class MainActivity extends Activity implements OnClickListener {
 	private WebView webView;
-	private static final String API = "http://xudafeng.com/feedit";
+	private static final String API = "http://xudafeng.com/feedit/api?type=get&unread=true";
 	private static final String TAG = "feedit";
 	private Button rightButton;
 	@Override

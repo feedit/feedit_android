@@ -26,7 +26,7 @@ var exec = function(data, global) {
   var html = !!content.innerHTML.length;
   var tplElm = $('#template')[0].innerHTML;
   var tpl = grace.compile(tplElm);
-  var API = 'http://xudafeng.com/feedit/read.php';
+  var API = 'http://xudafeng.com/feedit/api';
   var node = tpl({
     list: data
   });
@@ -39,13 +39,16 @@ var exec = function(data, global) {
   document.addEventListener('click', function(e) {
     var target = e.target;
     if (target.nodeName === 'BUTTON') {
-      var id = target.id.split('button-')[1];
+      var id = target.id;
       id = parseInt(id);
       var url = target.getAttribute('data-url');
       var title = target.getAttribute('data-title');
       //ajax
       JSONP(API, {
-        id: id
+        id: id,
+        type: 'update',
+        read: 'true',
+        ua: 'mobile'
       }, 'callback', function(data) {
         if (data) {
           if (data.success) {
