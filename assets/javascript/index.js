@@ -68,8 +68,10 @@ if (ios) {
     exec(data, window);
   };
 } else if(android) {
+  alert(dataFromInterface)
   data = dataFromInterface.get('data');
   data = JSON.parse(data);
+  alert(JSON.stringify(data))
   exec(data, this);
 } else {
   exec(data, this);

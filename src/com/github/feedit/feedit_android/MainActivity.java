@@ -20,8 +20,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -34,6 +34,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	private static final String API = "http://xudafeng.com/feedit/api?type=get&unread=true";
 	private static final String TAG = "feedit";
 	private Button rightButton;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,7 +50,6 @@ public class MainActivity extends Activity implements OnClickListener {
 		rightButton.setOnClickListener(this);
 		// init webview
 		webView = (WebView) findViewById(R.id.webview);
-		webView.getSettings().setJavaScriptEnabled(true);
 		webView.setWebChromeClient(new WebChromeClient() {
 			@Override
 			public boolean onJsAlert(WebView view, String url, String message,
@@ -83,8 +83,10 @@ public class MainActivity extends Activity implements OnClickListener {
 		Task task = new Task();
 		task.execute(100);
 	}
+
 	class Task extends AsyncTask<Integer, Integer, String> {
 		ProgressBar processbar = (ProgressBar) findViewById(R.id.loading);
+
 		public Task() {
 		}
 
