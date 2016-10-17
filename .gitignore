@@ -27,5 +27,5 @@ proguard/
 
 .settings/
 
-*.swp
-*.swo
+*.sw*
+*.un~

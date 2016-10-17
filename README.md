@@ -1,4 +1,3 @@
-feedit-android
-==============
+# feedit-android
 
 feedit android
