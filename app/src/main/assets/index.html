@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="webview">
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+  <meta name="format-detection" content="telephone=no"/>
+  <meta name="format-detection" content="email=no"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0"/>
+  <title>webview</title>
+  <link rel="shortcut icon" href="images/avatar.png" type="image/x-icon" />
+  <link rel="stylesheet" href="stylesheet/base.css"/>
+  <link rel="stylesheet" href="stylesheet/index.css"/>
+  <script src="javascript/jsonp.js"></script>
+  <script src="javascript/grace.js"></script>
+</head>
+<body>
+  <div id="content"></div>
+  <script type="template" id="template">
+    <ul>
+      <#each val in $list#>
+      <li>
+        <button id="<#=$val.id#>" data-title="<#=$val.title#>" data-url="<#=$val.url#>"
+target="_blank"><#=$val.index#></button>
+        <span><#=$val.title#></span>
+      </li>
+      <#/each#>
+    </ul>
+  </script>
+</body>
+<script src="javascript/index.js"></script>
+</html>
