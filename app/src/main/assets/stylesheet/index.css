@@ -1,0 +1,45 @@
+/* webview demo */
+body {
+  width: 100%;
+  height: 100%;
+  color: #330000;
+  font-family: "Microsoft YaHei", Verdana, sans-serif;
+  text-shadow: rgba(0, 0, 0, 0.3) 0 -1px 0;
+}
+a {
+  text-decoration: none;
+  color: #330000;
+  padding-left: 2px;
+}
+a:hover {
+  text-decoration: none;
+  color: #cc0000;
+}
+a:visited {
+  text-decoration: none;
+  color: #712704;
+}
+ul {
+  padding: 0;
+}
+li {
+  list-style-type: none;
+  margin: 12px 0;
+  font-size: 18px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+li p {
+  text-align: center;
+}
+i {
+  font-style: normal;
+}
+#content {
+  padding: 10px;
+}
+.no-result {
+  text-align: center;
+  padding: 20px 0;
+}
